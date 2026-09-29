@@ -42,3 +42,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# AI Assistants (Claude, Cursor, Cline, etc.)
+CLAUDE.md
+claude.md
