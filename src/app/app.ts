@@ -1,13 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   imports: [],
-  selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  selector: 'app-root', // = nome usado no HTML para chamar o componente
+  styleUrl: './app.scss', // = aponta para página de estilo
+  templateUrl: './app.html', // = aponta para arquivo de estrutura
 })
 export class App {
-  // Raiz/Startup do PROJETO
   protected readonly title = signal('portfolio-2026');
 }
