@@ -3,7 +3,7 @@ import { Component, signal } from '@angular/core';
 @Component({
   imports: [],
   selector: 'app-root', // = nome usado no HTML para chamar o componente
-  styleUrl: './app.scss', // = aponta para página de estilo
+  styleUrl: './app.css', // = aponta para página de estilo
   templateUrl: './app.html', // = aponta para arquivo de estrutura
 })
 export class App {
