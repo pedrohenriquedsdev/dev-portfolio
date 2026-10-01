@@ -1,6 +1,10 @@
-<main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 p-6">
-  <p class="font-mono text-sm tracking-widest text-signal uppercase">Sistema online</p>
-  <h1 class="text-4xl font-bold md:text-6xl">Pedro Henrique</h1>
-  <span class="w-fit rounded-full border border-nebula/40 bg-nebula/20 px-3 py-1 font-mono text-xs text-nebula">token nebula · bg-nebula/20</span>
-  <p class="text-dim">Teste dos tokens: fundo <span class="text-ember">space</span>, texto <span class="text-star">star</span>, acento <span class="text-signal">signal</span>.</p>
+<!-- Fundo global: 3 camadas de estrelas com velocidades diferentes (paralaxe) -->
+<div class="stars stars-far" aria-hidden="true"></div>
+<div class="stars stars-mid" aria-hidden="true"></div>
+<div class="stars stars-near" aria-hidden="true"></div>
+
+<app-header nome="Pedro Henrique dos Santos" [links]="links"></app-header>
+
+<main>
+  <app-home></app-home>
 </main>

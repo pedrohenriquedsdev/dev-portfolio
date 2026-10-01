@@ -1,0 +1,76 @@
+<section class="relative mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 pt-32 pb-16 lg:grid-cols-2">
+
+  <!-- Coluna de texto: entra em cascata (animate-rise + delay escalonado) -->
+  <div class="relative z-10 flex flex-col gap-6">
+    <p class="animate-rise font-mono text-xs tracking-[0.3em] text-signal uppercase motion-reduce:animate-none">
+      // Portfolio · 2026 · Station online
+    </p>
+
+    <h1 class="animate-rise text-5xl leading-[1.05] font-bold [animation-delay:150ms] motion-reduce:animate-none md:text-7xl">
+      Pedro Henrique
+      <span class="bg-linear-to-r from-signal via-nebula to-ember bg-clip-text text-transparent">dos Santos</span>
+    </h1>
+
+    <!-- Painel HUD: inclina em 3D no hover (perspective + rotateX/Y) -->
+    <div
+      class="animate-rise w-fit max-w-md rounded-xl border border-line bg-hull/60 p-4 font-mono text-xs text-dim backdrop-blur-md transition-[transform,border-color,box-shadow] duration-500 ease-out [animation-delay:300ms] hover:[transform:perspective(800px)_rotateX(6deg)_rotateY(-10deg)_scale(1.03)] hover:border-signal/60 hover:shadow-[0_0_30px_-5px_var(--color-signal)] motion-reduce:animate-none">
+      <p><span class="text-ember">&gt;</span> status: <span class="text-signal">all systems nominal</span></p>
+      <p><span class="text-ember">&gt;</span> destination: <span class="text-star">frontend engineering</span></p>
+      <p><span class="text-ember">&gt;</span> mode: <span class="text-star">learning in public</span></p>
+    </div>
+
+    <div class="animate-rise flex flex-wrap gap-4 [animation-delay:450ms] motion-reduce:animate-none">
+      <a href="#"
+        class="group relative overflow-hidden rounded-full bg-signal px-6 py-3 font-mono text-sm font-medium text-space transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_40px_-5px_var(--color-signal)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal">
+        <span class="relative z-10">Explore the station</span>
+        <span class="absolute inset-0 -translate-x-full skew-x-12 bg-white/40 transition-transform duration-700 group-hover:translate-x-full"></span>
+      </a>
+      <a href="#"
+        class="rounded-full border border-line px-6 py-3 font-mono text-sm text-star transition-all duration-300 hover:-translate-y-1 hover:border-ember hover:text-ember hover:shadow-[0_10px_40px_-10px_var(--color-ember)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember">
+        Contact
+      </a>
+    </div>
+  </div>
+
+  <!-- Cena 3D: anéis orbitais inclinados (rotateX) girando em Z, dentro de uma perspectiva -->
+  <div class="relative mx-auto aspect-square w-full max-w-md [perspective:900px] lg:max-w-none" aria-hidden="true">
+
+    <!-- brilhos de nebulosa ao fundo -->
+    <div class="absolute -inset-10 animate-float rounded-full bg-nebula/25 blur-3xl"></div>
+    <div class="absolute inset-1/4 animate-float rounded-full bg-signal/20 blur-3xl [animation-delay:-4s]"></div>
+
+    <div class="absolute inset-0 animate-float [transform-style:preserve-3d] [animation-delay:-2s]">
+
+      <!-- núcleo da estação -->
+      <div class="absolute top-1/2 left-1/2 size-1/4 -translate-1/2 animate-pulse-core rounded-full bg-radial from-white via-signal to-nebula/60 shadow-[0_0_80px_10px_var(--color-signal)]"></div>
+
+      <!-- anel externo (inclinado 70deg, gira no sentido horário) -->
+      <div class="absolute inset-0 [transform-style:preserve-3d] [transform:rotateX(70deg)]">
+        <div class="absolute inset-0 animate-orbit rounded-full border border-signal/50 shadow-[0_0_25px_var(--color-signal)]">
+          <span class="absolute top-0 left-1/2 size-3 -translate-1/2 rounded-full bg-ember shadow-[0_0_20px_4px_var(--color-ember)]"></span>
+          <span class="absolute bottom-0 left-1/2 size-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-star shadow-[0_0_14px_var(--color-star)]"></span>
+        </div>
+      </div>
+
+      <!-- anel médio (outro ângulo, sentido contrário) -->
+      <div class="absolute inset-[14%] [transform-style:preserve-3d] [transform:rotateX(70deg)_rotateY(25deg)]">
+        <div class="absolute inset-0 animate-orbit-reverse rounded-full border-2 border-dashed border-nebula/70">
+          <span class="absolute top-1/2 right-0 size-2.5 translate-x-1/2 -translate-y-1/2 rounded-full bg-nebula shadow-[0_0_18px_4px_var(--color-nebula)]"></span>
+        </div>
+      </div>
+
+      <!-- anel interno -->
+      <div class="absolute inset-[30%] [transform-style:preserve-3d] [transform:rotateX(65deg)_rotateY(-20deg)]">
+        <div class="absolute inset-0 animate-orbit rounded-full border border-ember/60 [animation-duration:20s]">
+          <span class="absolute top-0 left-1/2 size-2 -translate-1/2 rounded-full bg-signal shadow-[0_0_12px_var(--color-signal)]"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- indicador de rolagem -->
+  <div class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[10px] tracking-[0.3em] text-dim uppercase sm:flex" aria-hidden="true">
+    Scroll
+    <span class="h-10 w-px animate-pulse bg-linear-to-b from-signal to-transparent"></span>
+  </div>
+</section>

@@ -15,10 +15,115 @@
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Animações: cada --animate-* vira a classe animate-* */
+  --animate-dock: dock 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-rise: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-orbit: orbit 40s linear infinite;
+  --animate-orbit-reverse: orbit 60s linear infinite reverse;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-pulse-core: pulse-core 4s ease-in-out infinite;
+
+  @keyframes dock {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -1.25rem, 0);
+    }
+  }
+
+  @keyframes pulse-core {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.12);
+    }
+  }
 }
 
 @layer base {
   body {
     @apply bg-space text-star font-display antialiased;
   }
+}
+
+/* Campo de estrelas em 3 camadas (paralaxe): quanto mais perto, maior, mais brilhante e mais rápido.
+   Cada camada é um "tile" de pontos (radial-gradient) repetido; animar background-position
+   por exatamente 1 tile cria um loop contínuo sem emendas. */
+@layer components {
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    background-repeat: repeat;
+  }
+
+  .stars-far {
+    background-image:
+      radial-gradient(1px 1px at 40px 60px, rgb(230 236 255 / 0.5), transparent),
+      radial-gradient(1px 1px at 190px 130px, rgb(230 236 255 / 0.4), transparent),
+      radial-gradient(1px 1px at 120px 240px, rgb(230 236 255 / 0.5), transparent);
+    background-size: 300px 300px;
+    animation: drift-far 200s linear infinite;
+  }
+
+  .stars-mid {
+    background-image:
+      radial-gradient(1.5px 1.5px at 30px 50px, #e6ecff, transparent),
+      radial-gradient(1.5px 1.5px at 130px 150px, rgb(92 225 230 / 0.9), transparent),
+      radial-gradient(1px 1px at 90px 20px, #e6ecff, transparent);
+    background-size: 200px 200px;
+    animation: drift-mid 110s linear infinite;
+  }
+
+  .stars-near {
+    background-image:
+      radial-gradient(2px 2px at 60px 90px, #ffffff, transparent),
+      radial-gradient(2.5px 2.5px at 220px 40px, rgb(255 184 107 / 0.95), transparent);
+    background-size: 340px 340px;
+    animation: drift-near 60s linear infinite;
+  }
+
+  @keyframes drift-far { to { background-position: 0 -300px; } }
+  @keyframes drift-mid { to { background-position: 0 -200px; } }
+  @keyframes drift-near { to { background-position: 0 -340px; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars { animation: none; }
 }
