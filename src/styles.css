@@ -26,6 +26,7 @@
   --animate-rise: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-arrive: arrive 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 
+  /* Só opacity e transform: são as únicas propriedades que a GPU anima sem repintar a página */
   @keyframes dock {
     from {
       opacity: 0;
@@ -48,17 +49,15 @@
     }
   }
 
-  /* Chegada da câmera: a estação começa longe e desfocada e "se aproxima" */
+  /* Chegada da câmera: a estação começa longe e "se aproxima" */
   @keyframes arrive {
     from {
       opacity: 0;
-      transform: scale(0.55);
-      filter: blur(10px);
+      transform: scale(0.6);
     }
     to {
       opacity: 1;
       transform: scale(1);
-      filter: blur(0);
     }
   }
 }
@@ -69,52 +68,66 @@
   }
 }
 
-/* Paralaxe do mouse: a Home escreve --mx e --my (de -1 a 1, suavizados) no <html>.
-   Cada camada usa esses valores com um multiplicador diferente: quanto mais perto, mais se move. */
+/* Campo de estrelas em 3 camadas.
+   Performance: o elemento (.stars) recebe o paralaxe do mouse via transform (feito no Home.ts)
+   e o ::before faz a deriva contínua, também via transform. Os dois ficam na GPU, sem repintar.
+   (Animar background-position repintava a tela inteira a cada frame e causava travadas.)
+   O ::before é 1 tile mais alto que a tela; deslocá-lo exatamente 1 tile cria um loop sem emenda. */
 @layer components {
   .stars {
     position: fixed;
     inset: -60px;
     z-index: -10;
+    overflow: hidden;
     pointer-events: none;
-    background-repeat: repeat;
+    will-change: transform;
+  }
+
+  .stars::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 calc(var(--tile) * -1) 0;
+    background-image: var(--dots);
+    background-size: var(--tile) var(--tile);
+    animation: drift var(--speed) linear infinite;
     will-change: transform;
   }
 
   .stars-far {
-    background-image:
+    --tile: 300px;
+    --speed: 200s;
+    --dots:
       radial-gradient(1px 1px at 40px 60px, rgb(230 236 255 / 0.5), transparent),
       radial-gradient(1px 1px at 190px 130px, rgb(230 236 255 / 0.4), transparent),
       radial-gradient(1px 1px at 120px 240px, rgb(230 236 255 / 0.5), transparent);
-    background-size: 300px 300px;
-    transform: translate3d(calc(var(--mx, 0) * -6px), calc(var(--my, 0) * -6px), 0);
-    animation: drift-far 200s linear infinite;
   }
 
   .stars-mid {
-    background-image:
+    --tile: 200px;
+    --speed: 110s;
+    --dots:
       radial-gradient(1.5px 1.5px at 30px 50px, #e6ecff, transparent),
       radial-gradient(1.5px 1.5px at 130px 150px, rgb(230 236 255 / 0.7), transparent),
       radial-gradient(1px 1px at 90px 20px, #e6ecff, transparent);
-    background-size: 200px 200px;
-    transform: translate3d(calc(var(--mx, 0) * -16px), calc(var(--my, 0) * -16px), 0);
-    animation: drift-mid 110s linear infinite;
   }
 
   .stars-near {
-    background-image:
+    --tile: 340px;
+    --speed: 60s;
+    --dots:
       radial-gradient(2px 2px at 60px 90px, #ffffff, transparent),
       radial-gradient(2.5px 2.5px at 220px 40px, rgb(255 184 107 / 0.9), transparent);
-    background-size: 340px 340px;
-    transform: translate3d(calc(var(--mx, 0) * -34px), calc(var(--my, 0) * -34px), 0);
-    animation: drift-near 60s linear infinite;
   }
 
-  @keyframes drift-far { to { background-position: 0 -300px; } }
-  @keyframes drift-mid { to { background-position: 0 -200px; } }
-  @keyframes drift-near { to { background-position: 0 -340px; } }
+  @keyframes drift {
+    to {
+      transform: translate3d(0, calc(var(--tile) * -1), 0);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stars { animation: none; }
+  .stars::before {
+    animation: none;
+  }
 }

@@ -1,15 +1,19 @@
 <section class="relative mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-6 pt-28 pb-16 lg:grid-cols-[1fr_1.1fr]">
 
-  <!-- Texto: sobe em sequência e se move um pouco contra o mouse (camada intermediária) -->
-  <div class="text-layer relative z-10 flex flex-col gap-8">
-    <p class="animate-rise font-mono text-xs tracking-[0.3em] text-dim uppercase motion-reduce:animate-none">
-      Portfolio — 2026
+  <!-- Texto: sobe em sequência e se move um pouco contra o mouse (data-depth = px de deslocamento) -->
+  <div class="relative z-10 flex flex-col gap-7" data-depth="6">
+    <p class="animate-rise font-mono text-xs tracking-[0.3em] text-signal uppercase motion-reduce:animate-none">
+      Fullstack Software Developer
     </p>
 
     <h1 class="animate-rise text-5xl leading-none font-bold tracking-tight [animation-delay:150ms] motion-reduce:animate-none md:text-7xl">
       Pedro Henrique
       <span class="mt-2 block font-light text-dim">dos Santos</span>
     </h1>
+
+    <p class="animate-rise max-w-md text-lg leading-relaxed text-dim [animation-delay:250ms] motion-reduce:animate-none">
+      Software built with care, from the interface to the infrastructure.
+    </p>
 
     <div class="animate-rise flex flex-wrap gap-3 [animation-delay:350ms] motion-reduce:animate-none">
       <a href="#"
@@ -27,7 +31,7 @@
   <!-- Estação: .scene dá a perspectiva, .rig recebe a câmera (mouse) e .spin gira sozinha -->
   <div class="relative mx-auto h-[340px] w-full max-w-lg animate-arrive motion-reduce:animate-none sm:h-[500px] lg:max-w-none" aria-hidden="true">
     <div class="scene absolute inset-0 flex items-center justify-center">
-      <div class="rig relative size-0 scale-[0.62] sm:scale-100">
+      <div class="rig relative size-0 scale-[0.62] sm:scale-100" data-camera>
         <div class="spin absolute inset-0">
 
           <div class="ring">
@@ -46,6 +50,8 @@
           <div class="spoke" [style.--i]="i"></div>
           }
 
+          <div class="wing" style="--y: -112px"></div>
+          <div class="wing" style="--y: 112px"></div>
           <div class="mast"></div>
         </div>
       </div>
