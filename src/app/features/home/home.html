@@ -1,70 +1,21 @@
-<section class="relative mx-auto grid min-h-screen max-w-6xl items-center gap-8 px-6 pt-28 pb-16 lg:grid-cols-[1fr_1.1fr]">
-
-  <!-- Texto: sobe em sequência e se move um pouco contra o mouse (data-depth = px de deslocamento) -->
-  <div class="relative z-10 flex flex-col gap-7" data-depth="6">
-    <p class="animate-rise font-mono text-xs tracking-[0.3em] text-signal uppercase motion-reduce:animate-none">
+<div class="mx-auto flex h-full max-w-6xl items-center px-6 pt-20">
+  <div class="flex max-w-xl flex-col gap-7">
+    <p class="font-mono text-xs tracking-[0.3em] text-signal uppercase">
       Fullstack Software Developer
     </p>
 
-    <h1 class="animate-rise text-5xl leading-none font-bold tracking-tight [animation-delay:150ms] motion-reduce:animate-none md:text-7xl">
+    <h1 class="text-5xl leading-none font-bold tracking-tight md:text-7xl">
       Pedro Henrique
       <span class="mt-2 block font-light text-dim">dos Santos</span>
     </h1>
 
-    <p class="animate-rise max-w-md text-lg leading-relaxed text-dim [animation-delay:250ms] motion-reduce:animate-none">
+    <p class="max-w-md text-lg leading-relaxed text-dim">
       Software built with care, from the interface to the infrastructure.
     </p>
 
-    <div class="animate-rise flex flex-wrap gap-3 [animation-delay:350ms] motion-reduce:animate-none">
-      <a href="#"
-        class="group inline-flex items-center gap-3 rounded-sm bg-star px-6 py-3 font-mono text-sm font-medium text-space transition-all duration-300 hover:gap-5 hover:bg-signal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal">
-        Explore
-        <span aria-hidden="true">→</span>
-      </a>
-      <a href="#"
-        class="rounded-sm border border-line px-6 py-3 font-mono text-sm text-star transition-colors duration-300 hover:border-signal hover:text-signal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal">
-        Contact
-      </a>
-    </div>
-  </div>
-
-  <!-- Estação: .scene dá a perspectiva, .rig recebe a câmera (mouse) e .spin gira sozinha -->
-  <div class="relative mx-auto h-[340px] w-full max-w-lg animate-arrive motion-reduce:animate-none sm:h-[500px] lg:max-w-none" aria-hidden="true">
-    <div class="scene absolute inset-0 flex items-center justify-center">
-      <div class="rig relative size-0 scale-[0.62] sm:scale-100" data-camera>
-        <div class="spin absolute inset-0">
-
-          <div class="ring">
-            @for (i of ringPanels; track i) {
-            <div class="panel" [class.lit]="i % 3 === 0" [style.--i]="i"></div>
-            }
-          </div>
-
-          <div class="hub">
-            @for (i of hubPanels; track i) {
-            <div class="panel" [style.--i]="i"></div>
-            }
-          </div>
-
-          @for (i of spokes; track i) {
-          <div class="spoke" [style.--i]="i"></div>
-          }
-
-          <div class="wing" style="--y: -112px"></div>
-          <div class="wing" style="--y: 112px"></div>
-          <div class="mast"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- legenda técnica, como numa prancha de engenharia -->
-    <p class="absolute right-0 bottom-0 font-mono text-[10px] tracking-[0.25em] text-dim uppercase">
-      Fig. 01 — Orbital station
+    <p class="flex items-center gap-3 font-mono text-[10px] tracking-[0.3em] text-dim uppercase">
+      <span class="h-px w-10 bg-dim/50"></span>
+      Scroll to enter the station
     </p>
   </div>
-
-  <div class="absolute bottom-6 left-6 hidden items-center gap-3 font-mono text-[10px] tracking-[0.3em] text-dim uppercase sm:flex" aria-hidden="true">
-    <span class="h-px w-10 bg-dim/50"></span>
-    Scroll
-  </div>
-</section>
+</div>

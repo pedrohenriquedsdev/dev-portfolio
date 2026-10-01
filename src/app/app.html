@@ -1,13 +1,29 @@
-<!-- Luz ambiente: um "sol" quente no canto superior direito e azul profundo embaixo à esquerda -->
-<div class="pointer-events-none fixed inset-0 -z-20 bg-[radial-gradient(circle_at_85%_5%,rgb(255_184_107/0.14),transparent_40%),radial-gradient(circle_at_10%_95%,var(--color-nebula),transparent_55%)]" aria-hidden="true"></div>
+<!-- Palco 3D (canvas em tela cheia, atrás de tudo) -->
+<app-stage />
 
-<!-- Estrelas em 3 camadas com paralaxe: data-depth = quantos px se movem com o mouse (ver Home.ts) -->
-<div class="stars stars-far" data-depth="6" aria-hidden="true"></div>
-<div class="stars stars-mid" data-depth="16" aria-hidden="true"></div>
-<div class="stars stars-near" data-depth="34" aria-hidden="true"></div>
+<app-header
+  nome="Pedro Henrique dos Santos"
+  [links]="links"
+  [active]="journey.nearestIndex()"
+  (selected)="journey.goTo($event)"
+/>
 
-<app-header nome="Pedro Henrique dos Santos" [links]="links"></app-header>
-
+<!-- Conteúdo de cada sala: fica fixo na tela e só aparece enquanto a câmera está naquela sala -->
 <main>
-  <app-home></app-home>
+  @for (room of journey.rooms; track room.id; let i = $index) {
+  <section
+    class="pointer-events-none fixed inset-0 z-10 translate-y-6 opacity-0 transition-[opacity,translate] duration-700 ease-out data-[active=true]:pointer-events-auto data-[active=true]:translate-y-0 data-[active=true]:opacity-100 motion-reduce:transition-none"
+    [attr.data-active]="journey.activeIndex() === i"
+    [attr.aria-hidden]="journey.activeIndex() !== i"
+  >
+    @if (room.id === 'home') {
+    <app-home />
+    } @else {
+    <app-room-panel [compartment]="room.compartment" [title]="room.label" [index]="i" />
+    }
+  </section>
+  }
 </main>
+
+<!-- Espaço rolável: é o scroll dentro dele que conduz a câmera pela estação -->
+<div [style.height.vh]="journey.scrollScreens * 100" aria-hidden="true"></div>

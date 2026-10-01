@@ -1,9 +1,9 @@
 <header
-  class="animate-dock fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-space/85 motion-reduce:animate-none">
+  class="animate-dock fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-space/70 motion-reduce:animate-none">
   <div class="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6 sm:py-3">
 
     <!-- Identificação da estação: ponto pulsante + nome vindo do input() -->
-    <a href="#" class="flex items-center gap-3 font-mono text-sm tracking-widest text-signal uppercase">
+    <a href="#" (click)="select($event, 0)" class="flex items-center gap-3 font-mono text-sm tracking-widest text-signal uppercase">
       <span class="relative flex size-2.5" aria-hidden="true">
         <span class="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-60"></span>
         <span class="relative inline-flex size-2.5 rounded-full bg-signal"></span>
@@ -11,12 +11,12 @@
       <span class="truncate">{{ nome() }}</span>
     </a>
 
-    <!-- Painel de navegação: cada link é um "módulo" numerado da estação -->
+    <!-- Painel de navegação: cada link é um "módulo" numerado; o ativo acende -->
     <nav aria-label="Main" class="-mx-2 flex gap-1 overflow-x-auto font-mono text-xs tracking-wider uppercase">
       @for (link of links(); track link) {
-      <a href="#"
-        class="group relative whitespace-nowrap px-3 py-2 text-dim transition-colors duration-700 hover:text-star focus-visible:text-star focus-visible:outline-none after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-signal after:shadow-[0_0_8px_var(--color-signal)] after:transition-transform after:duration-700 hover:after:scale-x-100 focus-visible:after:scale-x-100">
-        <span class="mr-1 text-ember/70 transition-colors group-hover:text-ember">0{{ $index + 1 }}</span>{{ link }}
+      <a href="#" (click)="select($event, $index)" [attr.aria-current]="$index === active() ? 'true' : null"
+        class="group relative whitespace-nowrap px-3 py-2 text-dim transition-colors duration-500 hover:text-star focus-visible:text-star focus-visible:outline-none aria-[current=true]:text-star after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-signal after:shadow-[0_0_8px_var(--color-signal)] after:transition-transform after:duration-500 hover:after:scale-x-100 focus-visible:after:scale-x-100 aria-[current=true]:after:scale-x-100">
+        <span class="mr-1 text-ember/70 transition-colors group-hover:text-ember group-aria-[current=true]:text-ember">0{{ $index + 1 }}</span>{{ link }}
       </a>
       }
     </nav>

@@ -1,0 +1,30 @@
+<canvas #canvas class="fixed inset-0 -z-10 block size-full" aria-hidden="true"></canvas>
+
+@if (!removed()) {
+<!-- Tela de loading: sequência de acoplagem. Some com fade quando o mundo 3D está pronto. -->
+<div
+  class="fixed inset-0 z-100 flex flex-col items-center justify-center gap-10 bg-space transition-opacity duration-700 ease-out"
+  [class.opacity-0]="ready()"
+  [class.pointer-events-none]="ready()"
+  role="status"
+  aria-live="polite"
+>
+  <!-- miniatura da estação: dois anéis girando em sentidos opostos em volta do núcleo -->
+  <div class="relative size-28" aria-hidden="true">
+    <span class="absolute inset-0 animate-spin rounded-full border border-dashed border-signal/60 [animation-duration:10s]"></span>
+    <span class="absolute inset-4 animate-spin rounded-full border border-line [animation-direction:reverse] [animation-duration:6s]"></span>
+    <span class="absolute inset-[2.15rem] rounded-full bg-ember/90"></span>
+    <span class="absolute top-0 left-1/2 size-1.5 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-signal"></span>
+  </div>
+
+  <div class="flex w-64 flex-col gap-3 font-mono text-[11px] tracking-[0.3em] text-dim uppercase">
+    <div class="flex items-center justify-between">
+      <span>Docking sequence</span>
+      <span class="text-signal">{{ percent() }}%</span>
+    </div>
+    <div class="h-px w-full bg-line">
+      <div class="h-px bg-signal transition-[width] duration-300 ease-out" [style.width.%]="percent()"></div>
+    </div>
+  </div>
+</div>
+}
