@@ -1,17 +1,22 @@
 /* Estilos globais do projeto */
 @import "tailwindcss";
 
-/* Design tokens: cada variável vira classes (bg-space, text-star, text-signal, font-display...) */
+/* Design tokens: cada variável vira classes (bg-space, text-star, text-signal, font-display...)
+   Paleta com função (nada decorativo):
+   - space / hull / line: o vazio e as superfícies
+   - star / dim: texto
+   - signal: a única cor de interface (HUD, foco, hover)
+   - ember: luz quente, vem do "sol" e das janelas acesas da estação
+   - nebula: azul bem escuro, só para dar profundidade ao fundo */
 @theme {
-  /* Paleta "missão espacial": fundo profundo, texto de estrela, acentos de painel de controle */
-  --color-space: #05070d;      /* fundo base, o "vazio" */
-  --color-hull: #0c1220;       /* superfícies/cartões, um degrau acima do fundo */
-  --color-line: #1c2740;       /* bordas e divisórias discretas */
-  --color-star: #e6ecff;       /* texto principal */
-  --color-dim: #8a96b5;        /* texto secundário */
-  --color-signal: #5ce1e6;     /* acento principal: ciano de HUD/telemetria */
-  --color-ember: #ffb86b;      /* acento quente: dourado "Voyager", usar com moderação */
-  --color-nebula: #8b5cf6;     /* violeta de nebulosa: glows, gradientes e fundos translúcidos */
+  --color-space: #05070d;
+  --color-hull: #0c1220;
+  --color-line: #1c2740;
+  --color-star: #e6ecff;
+  --color-dim: #8a96b5;
+  --color-signal: #5ce1e6;
+  --color-ember: #ffb86b;
+  --color-nebula: #16254f;
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -19,10 +24,7 @@
   /* Animações: cada --animate-* vira a classe animate-* */
   --animate-dock: dock 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-rise: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-orbit: orbit 40s linear infinite;
-  --animate-orbit-reverse: orbit 60s linear infinite reverse;
-  --animate-float: float 8s ease-in-out infinite;
-  --animate-pulse-core: pulse-core 4s ease-in-out infinite;
+  --animate-arrive: arrive 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 
   @keyframes dock {
     from {
@@ -38,39 +40,25 @@
   @keyframes rise {
     from {
       opacity: 0;
-      transform: translateY(2rem);
-      filter: blur(6px);
+      transform: translateY(1.5rem);
     }
     to {
       opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
   }
 
-  @keyframes orbit {
+  /* Chegada da câmera: a estação começa longe e desfocada e "se aproxima" */
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: scale(0.55);
+      filter: blur(10px);
+    }
     to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(0, -1.25rem, 0);
-    }
-  }
-
-  @keyframes pulse-core {
-    0%, 100% {
-      opacity: 0.7;
-      transform: scale(1);
-    }
-    50% {
       opacity: 1;
-      transform: scale(1.12);
+      transform: scale(1);
+      filter: blur(0);
     }
   }
 }
@@ -81,16 +69,16 @@
   }
 }
 
-/* Campo de estrelas em 3 camadas (paralaxe): quanto mais perto, maior, mais brilhante e mais rápido.
-   Cada camada é um "tile" de pontos (radial-gradient) repetido; animar background-position
-   por exatamente 1 tile cria um loop contínuo sem emendas. */
+/* Paralaxe do mouse: a Home escreve --mx e --my (de -1 a 1, suavizados) no <html>.
+   Cada camada usa esses valores com um multiplicador diferente: quanto mais perto, mais se move. */
 @layer components {
   .stars {
     position: fixed;
-    inset: 0;
+    inset: -60px;
     z-index: -10;
     pointer-events: none;
     background-repeat: repeat;
+    will-change: transform;
   }
 
   .stars-far {
@@ -99,23 +87,26 @@
       radial-gradient(1px 1px at 190px 130px, rgb(230 236 255 / 0.4), transparent),
       radial-gradient(1px 1px at 120px 240px, rgb(230 236 255 / 0.5), transparent);
     background-size: 300px 300px;
+    transform: translate3d(calc(var(--mx, 0) * -6px), calc(var(--my, 0) * -6px), 0);
     animation: drift-far 200s linear infinite;
   }
 
   .stars-mid {
     background-image:
       radial-gradient(1.5px 1.5px at 30px 50px, #e6ecff, transparent),
-      radial-gradient(1.5px 1.5px at 130px 150px, rgb(92 225 230 / 0.9), transparent),
+      radial-gradient(1.5px 1.5px at 130px 150px, rgb(230 236 255 / 0.7), transparent),
       radial-gradient(1px 1px at 90px 20px, #e6ecff, transparent);
     background-size: 200px 200px;
+    transform: translate3d(calc(var(--mx, 0) * -16px), calc(var(--my, 0) * -16px), 0);
     animation: drift-mid 110s linear infinite;
   }
 
   .stars-near {
     background-image:
       radial-gradient(2px 2px at 60px 90px, #ffffff, transparent),
-      radial-gradient(2.5px 2.5px at 220px 40px, rgb(255 184 107 / 0.95), transparent);
+      radial-gradient(2.5px 2.5px at 220px 40px, rgb(255 184 107 / 0.9), transparent);
     background-size: 340px 340px;
+    transform: translate3d(calc(var(--mx, 0) * -34px), calc(var(--my, 0) * -34px), 0);
     animation: drift-near 60s linear infinite;
   }
 

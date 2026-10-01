@@ -1,0 +1,133 @@
+/* Estação 3D feita só com CSS.
+   Um "cilindro" é um conjunto de painéis planos: cada um gira i * (360 / n) graus em Y e é
+   empurrado para fora (translateZ) por um raio. Com n painéis, fecha o círculo. */
+
+.scene {
+  perspective: 1100px;
+}
+
+/* Câmera: inclina a estação conforme o mouse (--mx/--my vêm do Home.ts) */
+.rig {
+  transform-style: preserve-3d;
+  transform: rotateX(calc(-18deg + var(--my, 0) * -12deg)) rotateY(calc(var(--mx, 0) * 22deg));
+}
+
+.spin {
+  transform-style: preserve-3d;
+  animation: spin 90s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.ring,
+.hub {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.ring {
+  --n: 36;
+  --r: 190px;
+  --w: 33px;
+  --h: 52px;
+}
+
+.hub {
+  --n: 12;
+  --r: 28px;
+  --w: 15px;
+  --h: 150px;
+}
+
+.panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--w);
+  height: var(--h);
+  margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+  transform: rotateY(calc(var(--i) * (360deg / var(--n)))) translateZ(var(--r));
+  background: linear-gradient(180deg, rgb(20 29 50 / 0.92), rgb(8 12 22 / 0.95));
+  border: 1px solid rgb(230 236 255 / 0.14);
+  /* aro superior e inferior mais claros, como a estrutura de um módulo */
+  box-shadow:
+    inset 0 3px 0 rgb(230 236 255 / 0.22),
+    inset 0 -3px 0 rgb(230 236 255 / 0.22);
+}
+
+/* Janela: apagada por padrão; a classe .lit acende em luz quente */
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 40% 28%;
+  background: rgb(92 225 230 / 0.1);
+}
+
+.panel.lit::after {
+  background: rgb(255 184 107 / 0.85);
+  box-shadow: 0 0 10px rgb(255 184 107 / 0.55);
+}
+
+.hub .panel::after {
+  display: none;
+}
+
+/* Raios que ligam o centro ao anel */
+.spoke {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 162px;
+  height: 3px;
+  margin-top: -1.5px;
+  transform-origin: 0 50%;
+  transform: rotateY(calc(var(--i) * 60deg)) translateX(28px);
+  background: linear-gradient(90deg, rgb(230 236 255 / 0.35), rgb(230 236 255 / 0.12));
+}
+
+/* Antena com luz de sinalização */
+.mast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 70px;
+  margin: -145px 0 0 -1px;
+  background: rgb(230 236 255 / 0.4);
+}
+
+.mast::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffb86b;
+  box-shadow: 0 0 12px 2px rgb(255 184 107 / 0.8);
+  animation: blink 2.4s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* Texto levemente à frente do fundo: se move pouco, contra o mouse */
+.text-layer {
+  transform: translate3d(calc(var(--mx, 0) * -6px), calc(var(--my, 0) * -4px), 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin,
+  .mast::after {
+    animation: none;
+  }
+}
