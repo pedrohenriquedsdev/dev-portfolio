@@ -1,2 +1,24 @@
 /* Estilos globais do projeto */
 @import "tailwindcss";
+
+/* Design tokens: cada variável vira classes (bg-space, text-star, text-signal, font-display...) */
+@theme {
+  /* Paleta "missão espacial": fundo profundo, texto de estrela, acentos de painel de controle */
+  --color-space: #05070d;      /* fundo base, o "vazio" */
+  --color-hull: #0c1220;       /* superfícies/cartões, um degrau acima do fundo */
+  --color-line: #1c2740;       /* bordas e divisórias discretas */
+  --color-star: #e6ecff;       /* texto principal */
+  --color-dim: #8a96b5;        /* texto secundário */
+  --color-signal: #5ce1e6;     /* acento principal: ciano de HUD/telemetria */
+  --color-ember: #ffb86b;      /* acento quente: dourado "Voyager", usar com moderação */
+  --color-nebula: #8b5cf6;     /* violeta de nebulosa: glows, gradientes e fundos translúcidos */
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-space text-star font-display antialiased;
+  }
+}
