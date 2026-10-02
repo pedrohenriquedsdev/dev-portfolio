@@ -1,6 +1,6 @@
 <div class="mx-auto flex h-full max-w-6xl items-center px-6 pt-20">
   <div class="flex max-w-2xl flex-col gap-6">
-    <div class="rounded-sm border-l border-signal/50 bg-space/55 py-4 pr-6 pl-6 backdrop-blur-[2px]">
+    <div class="rounded-sm border-l border-signal/50 bg-space/90 py-4 pr-6 pl-6 backdrop-blur-md">
       <p class="font-mono text-xs tracking-[0.3em] text-signal uppercase">
         <span class="text-ember">05</span> · Mission log
       </p>
@@ -9,7 +9,7 @@
 
     @for (entry of experience; track entry.organization; let i = $index) {
     <article
-      class="animate-card-in rounded-sm border border-line/60 bg-hull/40 p-5 backdrop-blur-[2px] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-signal/50 hover:shadow-[0_0_40px_-16px_var(--color-signal)] motion-reduce:animate-none"
+      class="animate-card-in rounded-sm border border-line/60 bg-hull/85 p-5 backdrop-blur-md transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-signal/50 hover:shadow-[0_0_40px_-16px_var(--color-signal)] motion-reduce:animate-none"
       [style.animation-delay.ms]="i * 70"
     >
       <div class="flex flex-wrap items-baseline justify-between gap-2">

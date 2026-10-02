@@ -86,6 +86,7 @@
   .scroll-dock {
     scrollbar-width: thin;
     scrollbar-color: var(--color-signal) transparent;
+    -webkit-overflow-scrolling: touch;
   }
   .scroll-dock::-webkit-scrollbar {
     width: 6px;

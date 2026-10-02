@@ -14,7 +14,7 @@
     <!-- Painel de navegação: cada link é um "módulo" numerado; o ativo acende -->
     <nav aria-label="Main" class="-mx-2 flex gap-1 overflow-x-auto font-mono text-xs tracking-wider uppercase">
       @for (link of links(); track link) {
-      <a href="#" (click)="select($event, $index)" [attr.aria-current]="$index === active() ? 'true' : null"
+      <a #link href="#" (click)="select($event, $index)" [attr.aria-current]="$index === active() ? 'true' : null"
         class="group relative whitespace-nowrap px-3 py-2 text-dim transition-colors duration-500 hover:text-star focus-visible:text-star focus-visible:outline-none aria-[current=true]:text-star after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-signal after:shadow-[0_0_8px_var(--color-signal)] after:transition-transform after:duration-500 hover:after:scale-x-100 focus-visible:after:scale-x-100 aria-[current=true]:after:scale-x-100">
         <span class="mr-1 text-ember/70 transition-colors group-hover:text-ember group-aria-[current=true]:text-ember">0{{ $index + 1 }}</span>{{ link }}
       </a>
