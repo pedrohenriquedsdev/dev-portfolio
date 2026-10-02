@@ -1,0 +1,28 @@
+<div class="mx-auto flex h-full max-w-6xl items-center px-6 pt-20">
+  <div class="flex max-w-2xl flex-col gap-6">
+    <div class="rounded-sm border-l border-signal/50 bg-space/55 py-4 pr-6 pl-6 backdrop-blur-[2px]">
+      <p class="font-mono text-xs tracking-[0.3em] text-signal uppercase">
+        <span class="text-ember">05</span> · Mission log
+      </p>
+      <h2 class="mt-2 text-4xl leading-none font-bold tracking-tight md:text-6xl">Experience</h2>
+    </div>
+
+    @for (entry of experience; track entry.organization) {
+    <article class="rounded-sm border border-line/60 bg-hull/40 p-5 backdrop-blur-[2px]">
+      <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 class="text-lg font-bold text-star">{{ entry.organization }}</h3>
+        <span class="font-mono text-[11px] tracking-wider text-dim uppercase">{{ entry.period }}</span>
+      </div>
+      <p class="mt-1 font-mono text-xs tracking-wider text-signal uppercase">{{ entry.role }}</p>
+      <ul class="mt-3 flex flex-col gap-1.5 text-sm leading-relaxed text-dim">
+        @for (item of entry.highlights; track item) {
+        <li class="flex gap-2">
+          <span class="text-ember" aria-hidden="true">›</span>
+          {{ item }}
+        </li>
+        }
+      </ul>
+    </article>
+    }
+  </div>
+</div>

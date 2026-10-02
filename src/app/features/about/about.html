@@ -1,0 +1,57 @@
+<div class="mx-auto flex h-full max-w-6xl items-center px-6 pt-20">
+  <div class="flex max-w-2xl flex-col gap-6 rounded-sm border-l border-signal/50 bg-space/55 py-4 pr-6 pl-6 backdrop-blur-[2px]">
+    <p class="font-mono text-xs tracking-[0.3em] text-signal uppercase">
+      <span class="text-ember">02</span> · Crew quarters
+    </p>
+    <h2 class="text-4xl leading-none font-bold tracking-tight md:text-6xl">About me</h2>
+
+    <p class="max-w-xl text-sm leading-relaxed text-dim">
+      I'm a software developer in training, building a Fullstack Software Developer profile. What drives me is the
+      challenge of solving problems, engineering flows, and designing systems that work well end to end.
+    </p>
+    <p class="max-w-xl text-sm leading-relaxed text-dim">
+      My current focus is fullstack development inside the Microsoft ecosystem — building APIs with ASP.NET Core
+      and SPAs with Angular, using C# and TypeScript as my main languages.
+    </p>
+
+    <div class="flex flex-col gap-4">
+      <div>
+        <p class="font-mono text-[11px] tracking-[0.25em] text-signal uppercase">Current focus</p>
+        <ul class="mt-2 flex flex-wrap gap-2">
+          @for (item of focus; track item) {
+          <li class="rounded-full border border-line/60 bg-hull/40 px-3 py-1 font-mono text-[11px] text-dim">
+            {{ item }}
+          </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-mono text-[11px] tracking-[0.25em] text-signal uppercase">Also interested in</p>
+        <ul class="mt-2 flex flex-wrap gap-2">
+          @for (item of interests; track item) {
+          <li class="rounded-full border border-line/60 bg-hull/40 px-3 py-1 font-mono text-[11px] text-dim">
+            {{ item }}
+          </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-mono text-[11px] tracking-[0.25em] text-signal uppercase">Currently exploring</p>
+        <ul class="mt-2 flex flex-wrap gap-2">
+          @for (item of exploring; track item) {
+          <li class="rounded-full border border-line/60 bg-hull/40 px-3 py-1 font-mono text-[11px] text-dim">
+            {{ item }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1 border-t border-line/60 pt-4 font-mono text-xs text-dim">
+      <p><span class="text-ember">›</span> Information Systems — expected 2028</p>
+      <p><span class="text-ember">›</span> Academia do Programador — 2026</p>
+    </div>
+  </div>
+</div>

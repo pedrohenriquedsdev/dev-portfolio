@@ -16,10 +16,28 @@
     [attr.data-active]="journey.activeIndex() === i"
     [attr.aria-hidden]="journey.activeIndex() !== i"
   >
-    @if (room.id === 'home') {
+    @switch (room.id) {
+    @case ('home') {
     <app-home />
-    } @else {
-    <app-room-panel [compartment]="room.compartment" [title]="room.label" [index]="i" />
+    }
+    @case ('about') {
+    <app-about />
+    }
+    @case ('projects') {
+    <app-projects />
+    }
+    @case ('skills') {
+    <app-skills />
+    }
+    @case ('experience') {
+    <app-experience />
+    }
+    @case ('resume') {
+    <app-resume />
+    }
+    @case ('contact') {
+    <app-contact />
+    }
     }
   </section>
   }

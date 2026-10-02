@@ -1,0 +1,46 @@
+<div class="mx-auto h-full max-w-6xl overflow-y-auto px-6 pt-24 pb-16">
+  <div class="max-w-md rounded-sm border-l border-signal/50 bg-space/55 py-4 pr-6 pl-6 backdrop-blur-[2px]">
+    <p class="font-mono text-xs tracking-[0.3em] text-signal uppercase">
+      <span class="text-ember">03</span> · Laboratory
+    </p>
+    <h2 class="mt-2 text-4xl leading-none font-bold tracking-tight md:text-6xl">Projects</h2>
+    <p class="mt-3 font-mono text-[11px] tracking-wider text-dim uppercase">Built in pair programming</p>
+  </div>
+
+  <div class="mt-10 grid gap-5 md:grid-cols-2">
+    @for (project of projects; track project.name) {
+    <article class="flex flex-col gap-3 rounded-sm border border-line/60 bg-hull/40 p-5 backdrop-blur-[2px]">
+      <div class="flex items-start justify-between gap-3">
+        <h3 class="text-lg font-bold text-star">{{ project.name }}</h3>
+        <span
+          class="shrink-0 rounded-full border px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase {{
+            project.status === 'completed' ? 'border-signal/50 text-signal' : 'border-ember/50 text-ember'
+          }}"
+        >
+          {{ project.status === 'completed' ? 'Completed' : 'In progress' }}
+        </span>
+      </div>
+
+      <p class="text-sm leading-relaxed text-dim">{{ project.description }}</p>
+
+      <ul class="flex flex-wrap gap-1.5">
+        @for (tech of project.stack; track tech) {
+        <li class="rounded-full border border-line/60 bg-space/60 px-2.5 py-0.5 font-mono text-[10px] text-dim">
+          {{ tech }}
+        </li>
+        }
+      </ul>
+
+      <a
+        [href]="project.link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-auto inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-signal uppercase transition-colors hover:text-star"
+      >
+        View on GitHub
+        <span aria-hidden="true">↗</span>
+      </a>
+    </article>
+    }
+  </div>
+</div>
