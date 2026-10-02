@@ -25,6 +25,8 @@
   --animate-dock: dock 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-rise: rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-arrive: arrive 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* Entrada dos cards (projetos, categorias de skills, experiências): usada com animation-delay por índice */
+  --animate-card-in: card-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 
   /* Só opacity e transform: são as únicas propriedades que a GPU anima sem repintar a página */
   @keyframes dock {
@@ -60,11 +62,44 @@
       transform: scale(1);
     }
   }
+
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.9rem) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 }
 
 @layer base {
   body {
     @apply bg-space text-star font-display antialiased;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar discreta e no tema da estação (painel de HUD, não a barra cinza do navegador) */
+  .scroll-dock {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-signal) transparent;
+  }
+  .scroll-dock::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scroll-dock::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scroll-dock::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--color-signal) 45%, transparent);
+    border-radius: 999px;
+  }
+  .scroll-dock::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-signal);
   }
 }
 

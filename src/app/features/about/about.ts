@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { skillIconUrl, skillInitials } from '../../data/skill-icons';
 
 /** Conteúdo da sala Crew quarters: biografia e áreas de foco/interesse. */
 @Component({
@@ -14,4 +15,6 @@ export class About {
     'Systems engineering',
   ];
   protected readonly exploring = ['Rust', 'C++', 'Kotlin', 'Python'];
+  protected readonly icon = skillIconUrl;
+  protected readonly initials = skillInitials;
 }

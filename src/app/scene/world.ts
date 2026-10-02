@@ -36,8 +36,8 @@ export class World {
   private readonly smaa: SMAAPass;
 
   private readonly path = new CameraPath();
-  private readonly sun = new THREE.DirectionalLight(0xffd9a8, 2.4);
-  private readonly hemi = new THREE.HemisphereLight(0x8aa8ff, 0x101828, 0.18);
+  private readonly sun = new THREE.DirectionalLight(0xffd9a8, 1.8);
+  private readonly hemi = new THREE.HemisphereLight(0x8aa8ff, 0x101828, 0.16);
 
   // Poucas luzes que acompanham a câmera: o custo de cada luz é pago por pixel,
   // então em vez de uma luz por sala usamos 3 que se movem e mudam de cor com a sala atual.
@@ -75,7 +75,7 @@ export class World {
     await yieldToBrowser();
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = 0.9;
 
     onProgress(0.12);
     await yieldToBrowser();
@@ -109,7 +109,7 @@ export class World {
 
     // luzes do exterior: sol quente + preenchimento azul frio vindo do lado oposto
     this.sun.position.set(90, 70, 120);
-    const fill = new THREE.DirectionalLight(0x6a8cff, 0.55);
+    const fill = new THREE.DirectionalLight(0x6a8cff, 0.45);
     fill.position.set(-80, -30, -60);
     this.scene.add(this.sun, fill, this.hemi, this.keyLight, this.featureLight, this.backLight);
 
@@ -120,7 +120,7 @@ export class World {
     // pós-processamento: o bloom faz brilhar tudo que emite luz forte (janelas, telas, reator)
     this.composer = new EffectComposer(renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.6, 1.2);
+    this.bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.4, 0.5, 1.45);
     this.composer.addPass(this.bloom);
     this.composer.addPass(new OutputPass());
     this.smaa = new SMAAPass();
@@ -211,8 +211,8 @@ export class World {
     this.interiors.group.visible = inside;
     this.station.group.visible = outside;
     const insideFactor = THREE.MathUtils.clamp((p - INTERIOR_ON) / 0.06, 0, 1);
-    this.sun.intensity = 2.4 * THREE.MathUtils.clamp((EXTERIOR_OFF - p) / 0.06, 0, 1);
-    this.hemi.intensity = 0.18 + 0.4 * insideFactor;
+    this.sun.intensity = 1.8 * THREE.MathUtils.clamp((EXTERIOR_OFF - p) / 0.06, 0, 1);
+    this.hemi.intensity = 0.16 + 0.3 * insideFactor;
 
     if (outside) this.station.update(time, delta);
 
@@ -263,9 +263,9 @@ export class World {
     this.featureLight.position.set(3.8, -0.4, zc - 6); // onde fica o objeto principal da sala
     this.backLight.position.set(this.pos.x, 2.5, this.pos.z + 5);
 
-    this.keyLight.intensity = 140 * insideFactor;
-    this.featureLight.intensity = 260 * insideFactor;
-    this.backLight.intensity = 60 * insideFactor;
+    this.keyLight.intensity = 85 * insideFactor;
+    this.featureLight.intensity = 150 * insideFactor;
+    this.backLight.intensity = 35 * insideFactor;
   }
 
   dispose(): void {

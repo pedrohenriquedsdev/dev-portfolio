@@ -120,7 +120,7 @@ function shell(tint: number, lightColor: number, windowOnRight = false): THREE.G
   }
 
   // faixas de luz no teto
-  for (const x of [-6, 0, 6]) box(g, 0.5, 0.15, ROOM_D - 8, glow(0xffffff, 1.6), x, hh - 0.25, 0);
+  for (const x of [-6, 0, 6]) box(g, 0.5, 0.15, ROOM_D - 8, glow(0xe8ecf5, 0.9), x, hh - 0.25, 0);
   return g;
 }
 

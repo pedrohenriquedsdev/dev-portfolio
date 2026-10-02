@@ -7,8 +7,11 @@
       <h2 class="mt-2 text-4xl leading-none font-bold tracking-tight md:text-6xl">Experience</h2>
     </div>
 
-    @for (entry of experience; track entry.organization) {
-    <article class="rounded-sm border border-line/60 bg-hull/40 p-5 backdrop-blur-[2px]">
+    @for (entry of experience; track entry.organization; let i = $index) {
+    <article
+      class="animate-card-in rounded-sm border border-line/60 bg-hull/40 p-5 backdrop-blur-[2px] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-signal/50 hover:shadow-[0_0_40px_-16px_var(--color-signal)] motion-reduce:animate-none"
+      [style.animation-delay.ms]="i * 70"
+    >
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h3 class="text-lg font-bold text-star">{{ entry.organization }}</h3>
         <span class="font-mono text-[11px] tracking-wider text-dim uppercase">{{ entry.period }}</span>
